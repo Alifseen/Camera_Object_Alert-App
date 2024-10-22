@@ -2,6 +2,7 @@ import cv2
 import numpy
 import time
 from emailer import send_email
+from glob import glob
 
 # ## Loading an Image
 # image1 = cv2.imread("files/image.png")
@@ -36,9 +37,14 @@ time.sleep(1)
 FIRST_FRAME = None
 live_object_status = []
 
+## 19. Now we will capture the image that we want to send in the email. Start by initiating a counter
+counter = 1
+
 while True:
     ## 15. Set up empty variables to use to trigger an action
     object_status = 0
+
+
 
     ## save frame from video
     check, frame = video.read()
@@ -80,6 +86,15 @@ while True:
         if object_rect.any():
             ## 14. If there is a rectangle that means there is a new object, in which case, we will change the status to 1, as long as there is an object, this will be 1.
             object_status = 1
+
+            ## 20. Save each frame as an image at speed of 30 frames per second for each second the rectangle is in the frame.
+            cv2.imwrite(f"images/{counter}.png", frame)
+            counter = counter + 1  ## increase counter.
+
+            ## 21. save the path of the image from the middle as that is most likely the image where object is most visible.
+            all_images_paths = glob("images/*.png")  ## all png images in the folder
+            mid_image_index = int(len(all_images_paths)/2)
+            mid_image_path = all_images_paths[mid_image_index]
 
     ## 16. We use the list of status to track and initiate the object. We only need the last two values since we are looking for 1,0 which means there was an object (1) but now there is not (0)
     live_object_status.append(object_status)
