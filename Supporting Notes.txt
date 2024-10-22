@@ -1,0 +1,95 @@
+What are images in Computer:
+Image is made up of pixels. Each pixel contains a color. Each color is store as list of numbers in the computer as the number of units Blue, Red, Green from 0 to 255. These numbers as stored as arrays/lists and each image has many pixels so essentially, to the computer an image is a 2 directional (rows and columns) nested array.
+
+cv2 (opencv-python)
+imread(path)
+.shape - dimensions of the array (column, row, number of colors/BGR)
+imwrite(path, a) - a means array
+
+.VideoCapture(0) - 1 for secondary camera.
+check, frame = .read
+
+time.sleep
+
+.imshow(name, frame) - in a while loop
+
+.waitkey
+ord("enter key here") - pressed a key
+.release()
+
+compare all frames to first frame, if different, extract different, draw rectangle around different, add rectangle to main frame
+
+preprocess frame
+.cvtColor(frame, cv2.COLOR_BGR2GRAY) - covnert to grayscale
+.GausianBlur(greyframe, (value of blur, value of blur), 0 - apply blur
+
+Add first frame to CONSTANT var outside loop.
+
+delatframe = .absdiff(first frame, current frame)
+
+threshold frame = .threshold(delta frame, threshold value, value to replace threshold value, cv2.THRESH_BINARY)
+
+dil frame = .dilate(threshold frame, none, iterations=2)
+
+cont, check = .findContours(dil frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+for con in cont:
+if cv2.contourArea < 10000: continue
+x, y, w, h = cv2.boundingrect((con)
+cv2.rectangle(frame, (x,y)(x+w,y+h), (0,255,0), 3)
+imshow(name, frame)
+
+
+trigger an action:
+status var = 0
+status_list var = []
+
+inside for loop, if rectangle.any(): status = 1
+
+outside for loop but inside while loop, append status list with status, then return on only last two index (index[-2:]) and set as new status list
+
+if status list is [1,0]: trigger action
+
+.putText(img, text, ord, fontface=cv2.FONT_HERSHEY_PLAIN, fontScale, color, thickness, lineType = cv2.LINE_AA)
+
+
+extract image from video frame:
+capture multiple images, select middle one and email that.
+
+in for loop, in status conditional
+count = 1
+imwrite.(f"count".png, frame)
+count+=1
+all_image var = glob(all files in images)
+middle img index = int(len(all_images var) / 2)
+middle img path = all_images[index]
+
+
+
+emailer.py
+send email with attachment:
+create a new app password for this email sending script
+
+this function will take in middle image path
+
+import email.message - EmailMessage
+create instance - emmsg = EmailMessage()
+emmsg["Subject"] = "add subject"
+emmsg.set_content("email body text")
+
+with open (mid img path, rb)
+
+emmsg.add_attachment(the img var saved above, maintype="image", subtype=img.what(None, the image var saved above) - be sure to import imghdr
+
+set up email:
+email = smtplib.SMTP(smtp.gmail.com, 587)
+email.ehlo()
+email.startls()
+email.login("email" "app password)"
+
+email.sendemail(sending email, recvng email, immsg.as_string())
+email.quit()
+
+
+if__name__=__main__:
+send_email(hard coded arguments to check)
