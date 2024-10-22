@@ -103,7 +103,7 @@ while True:
     ## 17. We trigger an action based on the condition that the object has left.
     if live_object_status[0] == 1 and live_object_status[1] == 0:
         ## 18. Send email
-        send_email()
+        send_email(mid_image_path)
 
     ## Display video
     cv2.imshow("1st Video", frame)
