@@ -57,8 +57,22 @@ while True:
     ## 7. improve the difference frame
     dilated_frame = cv2.dilate(threshold_frame, None, iterations=2)
 
+    ## 8. Store outline of new objects in frame
+    contours, check = cv2.findContours(dilated_frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    ## 9. Create rectangle around the new object oultine
+    ## 10. iterate over each frame object outline
+    for contour in contours:
+        ## 11. if the new outline is not very strong, go to next line
+        if cv2.contourArea(contour) < 5000:
+            continue
+        ## 12. if the new outline is strong, store its values and create a rectangle around it
+        x, y, w, h = cv2.boundingRect(contour)
+        ## we add the frame where it will be created, starting points, ending points, color, and number of colors (in case of BGR that is 3)
+        cv2.rectangle(frame, (x,y), (x+w, y+h), (255,0,0), 3)
+
     ## Display video
-    cv2.imshow("1st Video", dilated_frame)
+    cv2.imshow("1st Video", frame)
 
     ## listen for a key stroke
     key = cv2.waitKey(1)
