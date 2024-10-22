@@ -31,12 +31,21 @@ video = cv2.VideoCapture(0)  ## 0 for primary, 1 for secondary(USB etc) camera
 ## delay by 1 second to give time to open
 time.sleep(1)
 
+## 1. Store first frame
+FIRST_FRAME = None
+
 while True:
     ## save frame from video
     check, frame = video.read()
 
+    ## 2. convert to grey scale for efficiency
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2GRAY)
+
+    ## 3. add a blur to the video for effeciency
+    blur_frame = cv2.GaussianBlur(gray_frame, (21, 21), 0)
+
     ## Display video
-    cv2.imshow("1st Video", frame)
+    cv2.imshow("1st Video", blur_frame)
 
     ## listen for a key stroke
     key = cv2.waitKey(1)
