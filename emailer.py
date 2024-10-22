@@ -25,3 +25,6 @@ def send_email(img_path):
     ## Send email
     email.sendmail(username, username, emsg.as_string())
     email.quit()
+
+if __name__ == "__main__":
+    print("emailer")

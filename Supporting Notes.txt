@@ -93,3 +93,6 @@ email.quit()
 
 if__name__=__main__:
 send_email(hard coded arguments to check)
+
+
+When we execute, video freezes, this is because the interpreter goes line by line, and since it takes time to send the email, everything stops till the email is sent.

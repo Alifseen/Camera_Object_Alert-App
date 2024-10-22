@@ -3,6 +3,7 @@ import numpy
 import time
 from emailer import send_email
 from glob import glob
+import os
 
 # ## Loading an Image
 # image1 = cv2.imread("files/image.png")
@@ -39,6 +40,14 @@ live_object_status = []
 
 ## 19. Now we will capture the image that we want to send in the email. Start by initiating a counter
 counter = 1
+
+
+## 22. Remove all images from the folder after email has been sent
+def reset_images_folder():
+    folder = glob("images/*.png")
+    for img in folder:
+        os.remove(img)
+
 
 while True:
     ## 15. Set up empty variables to use to trigger an action
@@ -104,6 +113,7 @@ while True:
     if live_object_status[0] == 1 and live_object_status[1] == 0:
         ## 18. Send email
         send_email(mid_image_path)
+        reset_images_folder()
 
     ## Display video
     cv2.imshow("1st Video", frame)
