@@ -44,8 +44,21 @@ while True:
     ## 3. add a blur to the video for effeciency
     blur_frame = cv2.GaussianBlur(gray_frame, (21, 21), 0)
 
+    ## 4. Save the first frame in a variable so that other frames can be compared to it
+    if FIRST_FRAME is None:
+        FIRST_FRAME = blur_frame
+
+    ## 5. Create a frame that only shows the difference between current frame and first frame
+    diff_frame = cv2.absdiff(FIRST_FRAME, blur_frame)
+
+    ## 6. Increase the whiteness of the frame
+    threshold_frame = cv2.threshold(diff_frame, 60, 255, cv2.THRESH_BINARY)[1]
+
+    ## 7. improve the difference frame
+    dilated_frame = cv2.dilate(threshold_frame, None, iterations=2)
+
     ## Display video
-    cv2.imshow("1st Video", blur_frame)
+    cv2.imshow("1st Video", dilated_frame)
 
     ## listen for a key stroke
     key = cv2.waitKey(1)
