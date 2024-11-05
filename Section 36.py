@@ -4,6 +4,8 @@ import time
 from emailer import send_email
 from glob import glob
 import os
+from threading import Thread  # Because the video hangs, we introduce threading so the program doesnt wait to send email
+
 
 # ## Loading an Image
 # image1 = cv2.imread("files/image.png")
@@ -112,8 +114,15 @@ while True:
     ## 17. We trigger an action based on the condition that the object has left.
     if live_object_status[0] == 1 and live_object_status[1] == 0:
         ## 18. Send email
-        send_email(mid_image_path)
-        reset_images_folder()
+        #send_email(mid_image_path)
+        ## 23. Use Threading to send email
+        email_thread = Thread(target=send_email, args=(mid_image_path, ))
+        email_thread.daemon = True
+        email_thread.start()
+
+        ## 24. Initiate the Deletion of the images using threading
+        clear_thread = Thread(target=reset_images_folder)
+        clear_thread.daemon = True
 
     ## Display video
     cv2.imshow("1st Video", frame)
@@ -124,6 +133,11 @@ while True:
     ## break loop if q is pressed
     if key == ord("q"):
         break
+
+
+## 30. Instantiate cleaning images folder  once the program is quit
+clear_thread.start()
+
 
 ##  Open a window with video in it.
 video.release()

@@ -96,3 +96,12 @@ send_email(hard coded arguments to check)
 
 
 When we execute, video freezes, this is because the interpreter goes line by line, and since it takes time to send the email, everything stops till the email is sent.
+
+To create a thread use threading library with Thread class
+Thread(target=function, args=(argument as a tuple, ))
+
+Thread.deamon = True
+Thread.start()
+
+
+Image processing is used to find copyright issues by comparing frames of the videos.
