@@ -4,32 +4,7 @@ import time
 from emailer import send_email
 from glob import glob
 import os
-from threading import Thread  # Because the video hangs, we introduce threading so the program doesnt wait to send email
-
-
-# ## Loading an Image
-# image1 = cv2.imread("files/image.png")
-# print(image1.shape)
-# print(image1)
-#
-# ## Creating an Image
-# a = numpy.array([[[255, 0, 0],
-#   [255, 255, 255],
-#   [255, 255, 255],
-#   [187, 41, 160]],
-#
-#  [[255, 255, 255],
-#   [255, 255, 255],
-#   [255,  255,  255],
-#   [255, 255, 255]],
-#
-#  [[255, 255, 255],
-#   [0, 0, 0],
-#   [47, 255, 173],
-#   [255, 255, 255]]])
-#
-# image2 = cv2.imwrite("files/image2.png", a)
-
+from threading import Thread
 
 ## Capturing video
 video = cv2.VideoCapture(0)  ## 0 for primary, 1 for secondary(USB etc) camera
@@ -139,5 +114,4 @@ while True:
 clear_thread.start()
 
 
-##  Open a window with video in it.
-video.release()
+
